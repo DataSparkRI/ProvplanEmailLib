@@ -10,7 +10,7 @@ except ImportError:
         'download_url': 'https://github.com/ProvidencePlan/provplan-email-lib/zipball/master',
         'author_email': 'jellis@provplan.org',
         'version': '0.1.0',
-        'name': 'provplan_email)_lib'
+        'name': 'provplan_email_lib'
         }
 
     setup(**config)
