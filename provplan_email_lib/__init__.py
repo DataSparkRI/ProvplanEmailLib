@@ -22,6 +22,9 @@ class Emailer(object):
     def smtp_connect(self):
         try:
             smtp_connection = smtplib.SMTP(self.smtp_server, self.smtp_port)
+            smtp_connection.ehlo()
+            smtp_connection.starttls()
+            smtp_connection.ehlo()
         except smtplib.SMTPException, exception:
             print exception
         try:
