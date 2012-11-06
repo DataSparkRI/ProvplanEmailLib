@@ -16,6 +16,7 @@ body = Body
 
 Then use it:
 ```
+from provplan_email_lib import *
 e = Emailer()
 e.send_email() # this will just send whatever is in config
 e.disconnect()
