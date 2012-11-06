@@ -6,17 +6,33 @@ import ConfigParser
 
 class Emailer(object):
 
-    def __init__(self):
-        self.config = ConfigParser.ConfigParser()
-        self.config.read(os.path.join(os.path.dirname(__file__), 'config.ini'))
-        self.smtp_server = self.config.get('settings', 'smtp_server')
-        self.smtp_port = self.config.get('settings', 'smtp_port')
-        self.smtp_user = self.config.get('settings', 'smtp_user')
-        self.smtp_password = self.config.get('settings', 'smtp_password')
-        self.from_address = self.config.get('settings', 'from_address')
-        self.to_addresses = self.config.get('settings', 'to_addresses')
-        self.subject = self.config.get('settings', 'subject')
-        self.body = self.config.get('settings', 'body')
+    def __init__(self, config_file=None, smtp_server=None, smtp_port=None, smtp_user=None, smtp_password=None):
+
+        if config_file:
+            self.config = ConfigParser.ConfigParser()
+            self.config.read(config_file)
+            self.smtp_server = self.config.get('settings', 'smtp_server')
+            self.smtp_port = self.config.get('settings', 'smtp_port')
+            self.smtp_user = self.config.get('settings', 'smtp_user')
+            self.smtp_password = self.config.get('settings', 'smtp_password')
+        else:
+            if smtp_server:
+                self.smtp_server = smtp_server
+            else:
+                raise ValueError('smtp_server is required')
+            if smtp_port:
+                self.smtp_port = smtp_port
+            else:
+                raise ValueError('smtp_port is required')
+            if smtp_user:
+                self.smtp_user = smtp_user
+            else:
+                raise ValueError('smtp_user is required')
+            if smtp_password:
+                self.smtp_password= smtp_password
+            else:
+                raise ValueError('smtp_password is required')
+
         self.connection = self.smtp_connect()
 
     def smtp_connect(self):
@@ -59,7 +75,7 @@ class Emailer(object):
     def send_email(self, from_address=None, to_addresses=None, subject=None, body=None):
         message = self.construct_msg(from_address, to_addresses, subject, body)
         try:
-            self.connection.sendmail(self.from_address, self.to_addresses, message)
+            self.connection.sendmail(from_address, to_addresses, message)
         except smtplib.SMTPException, exception:
             print exception
 
