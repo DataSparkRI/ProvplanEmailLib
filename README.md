@@ -1,4 +1,4 @@
-#Smtp via MS exchange
+#Smtp mailer
 
 ## Usage
 If you want to use a config file, create one ex:config.ini. An example is included
