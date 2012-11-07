@@ -1,29 +1,28 @@
 #Smtp via MS exchange
 
 ## Usage
-Create config.ini, example is included
+If you want to use a config file, create one ex:config.ini. An example is included
 ```
 [settings]
 smtp_server = mail.example.org
 smtp_port = 25
 smtp_user = sender
 smtp_password = password
-from_address = sender@example.org
-to_addresses = to@example.org
-subject = Subject
-body = Body
+
 ```
 
 Then use it:
 ```
 from provplan_email_lib import *
-e = Emailer()
-e.send_email() # this will just send whatever is in config
+e = Emailer(config_file='/tmp/config.ini') #path to config file
+e.send_email(to_addresses='dude@programming.org',subject='Tesing out the code.', body='Unit test!',from_address='thatdude@testcase.org') 
 e.disconnect()
 
 ```
 
-You can override some config settings in ```send_email```. ```send_email``` takes the following
- ```send_email(from_address=None, to_addresses=None, subject=None, body=None)``` 
-
-
+Alternatively dont use a config file.
+```
+e = Emailer(None, smtp_server, smtp_port, smtp_user, smtp_password)
+e.send_email(to_addresses='dude@programming.org',subject='Tesing out the code.', body='Unit test!',from_address='thatdude@testcase.org') 
+e.disconnect()
+```
